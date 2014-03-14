@@ -1,0 +1,46 @@
+#
+# Copy of Jenkins configuration for demo_env
+#
+echo "Hello World" > /tmp/hello.txt
+mkdir -p ~/.ssh
+
+echo -n "-----BEGIN RSA PRIVATE KEY-----
+MIIEowIBAAKCAQEAw+VqKgUpCkTq1nwOErfUQqNOwAvf/kce00imTICbforwTOJD
+cvoePTAljtUY/ULc6lLmRSvK8/utt8DLLj9CHmXNJIHOQgV9k996yKHNALpcBXH2
+mIg4Mu6wkrZz+6CMb+Z+IcUti/amynYtswfdx/YpzGSfQnQcI/IZawjGH5tKbj1l
+LO4JmxU0o9VmM6eMOZ88eCym0HS0P2BlNYeTs9dPtojJJeG21SzyYmEEpcI0SPSo
+b/P/2TZD57J1q0eDOZbyK3+F2rjOabUlvkNcTZNljtKt/MMXFLnxp0qUZ/g+Sy3H
+rWv6Yl83s7G7y3qRPhVaYBFnbLFjC52grNAqUwIDAQABAoIBAQCSG1nDXXXuothE
+gOI+M72stgDWXAUEsibbjyP5izJuf1IbBecoqkRDftWEYovw2R3L52i3zqHgt6Yp
+lzHznFrEMUmAIRClTVMMJ3J8kbFFCbn4lbdGrNK9qikoQ8zdsDEOhOsuZNJDwgNE
+nkAXd5aCvacPOz1NYyxZ4wfyPOkISItGuD1YOWJK9VgxMqk86xKDC9llSW0iPSQZ
+3uP8B5ZVLpRwMxaDlMV7HgjimK9De44x+2JfJ1q753AqPhSksoJ/4DauJp9DXxRj
+2XRCTxzbVCfE19kt0C2CZOiGrCA0eRocEWPTBrmGkkQGqHhaHd1FlRORUYhmDv1s
+tghAohIBAoGBAPPe9GdJDf/ZBbM08xteXy3018WmObyrvgg93WIUrCIbn7s/NOfR
+jjiv3paX/mK+caEKGAIbY840ML4QD7PdN+9jNjhSckxfXohPEFE0lHpZMPw+FcwZ
+5vAh2Pl2fRdfMVHcs3qpZLmZD0wppjD3JD2PQ/GkkY9030lmZLPbygEDAoGBAM2j
+oR/+PGlDkiDyzraDub+mlDLwRMWL+0S7MLwYVUWzrUOxMScuZAmANR1bw9PIa7d1
+cooz/8KDPW+glx1239v5ZAsjup07VyH44ovS/ObtgfyVXp78iWKZSX2z1kBHPavh
+eIqq0CH2larijZm7VUhaK7HFG/2NnHOqe8Tk6ehxAoGAHBZFl8+2KQ1ZtrYWecR4
+udZFM6Jda/lrvY9CfBVdbeA4mVxCP6DG/Ihk3ntK9RxyAdYjxbpZ2FnyczFuXYzQ
+8GVAzWPRfjJNtO1GN9QSdbToC2UrJYKmMmnzj2eyKIryJzeABFSWITobpO33EhSk
+u+JQNPh7O0Z+oPmGB6D8tvkCgYBMswdZ432s1WMfnvCy6pbRgNQt26gK9pcVn6wh
+vAGyKb4qTWDD+G2fjY5CEQQNbeefWdMK8TIn3sN/aypx9vCwH2jNLtpf4s4xAZ+d
+/2gMyfF9wEi2jALCH+JlXDpBZ1D9Vu+a6PMQd+SDBFVETbcVcWxytc4m2DbOfXwE
+iE0mQQKBgA/ZTAPdkNTBD7ifMZoCyqUECZMPxE5HusTLRuU1RcGAX+1eqVBHIA7g
+cqyX9ukinSxULIskTrsSzG9r5Es6nN36LC2QfGEx4m+b919z1QW0zrAJ/bOgQXGM
+HqewAeP27U3c/mCwnFLjuD+5qjT3OPbl3LhgwAo+DDWEnD8MfSKE
+-----END RSA PRIVATE KEY-----
+" > ~/.ssh/deploy_rallysoftware_demo_env
+chmod 600 ~/.ssh/deploy_rallysoftware_demo_env
+
+echo -n "
+Host github.com
+IdentityFile ~/.ssh/deploy_rallysoftware_demo_env
+StrictHostKeyChecking no
+UserKnownHostsFile /dev/null
+" >> ~/.ssh/config
+
+mkdir -p /opt && git clone git@github.com:RallySoftware/demo_env.git /opt/demo_env
+(cd  /opt/demo_env && source "/usr/local/rvm/scripts/rvm" && source .rvmrc && rake )
+

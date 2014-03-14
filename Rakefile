@@ -4,4 +4,8 @@ RSpec::Core::RakeTask.new(:spec)
 
 task :test => :spec
 
-task :install => [ :test ]
+task :install do
+  system('scripts/db/create_dp_directory.sh') or exit(1)
+end
+
+task :default => [ :install, :test ]
