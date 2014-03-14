@@ -1,0 +1,50 @@
+#!/bin/bash
+#
+# dbora_reset_data        Startup script that resets the rally data
+# chkconfig: 35 99 01
+#
+# description:       Startup script that resets the rally data
+#
+start() {
+  ## /root/demo_env/scripts/something_that_cron_also_can_call_here.sh
+  ## RETVAL=$?
+  RETVAL=0
+}
+
+stop() {
+  RETVAL=0
+}
+
+status() {
+  RETVAL=0
+}
+
+install() {
+  self=`readlink -f $0`
+  self_short=`basename ${self}`
+  ln -s ${self} /etc/init.d/${self_short}
+  chkconfig ${self_short} on
+  RETVAL=$?
+}
+
+
+case "$1" in
+  start)
+  start
+  ;;
+  stop)
+  stop
+  ;;
+  restart)
+  stop
+  start
+  ;;
+  install)
+  install
+  ;;
+  *)
+  echo $"Usage: reset_data {start|stop|status}"
+  RETVAL=150
+esac
+
+exit $RETVAL

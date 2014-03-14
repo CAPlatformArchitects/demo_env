@@ -10,12 +10,13 @@ describe file '/etc/shadow' do
   it { should be_a_file }
 end
 
-describe service('dbora') do
+## ok - do the real stuff here
+describe service('dbora_reset_data') do
   it { should be_enabled }
+  it { should start_after 'dbora' }
   it { should start_before 'rallyapp' }
 end
 
-## ok - do the real stuff here
 describe file '/root/demo_env/oradump' do
   it { should be_a_directory }
 end
