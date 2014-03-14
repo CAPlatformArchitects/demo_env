@@ -25,10 +25,6 @@ describe file '/root/demo_env/oradump/import.dmp' do
   it { should be_a_file }
 end
 
-describe command 'basename `ls -1 /root/demo_env/oradump/proddb*.dmp`' do
-  its(:stdout) { should match /proddb/ }
-end
-
 describe sql("SELECT directory_name FROM dba_directories WHERE directory_name = 'DEMO_DUMP_DIR';") do
   its(:stdout) { should match 'DEMO_DUMP_DIR' }
 end
