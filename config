@@ -1,0 +1,45 @@
+#
+##############################################################################
+###[ CUSTOMIZE ME ]############################################################
+###############################################################################
+
+# database id (demo, XE, etc)
+ORACLE_SID=XE
+# path to oracle
+ORACLE_HOME=/home/oracle/app/oracle/product/11.2.0/db
+# path to symlink pointing to active rally build (points to appserver-config-master-####)
+RALLY_HOME_LATEST=/home/appuser/appserver-config-latest
+
+# local db app user
+ORACLE_USER_ID=demo
+ORACLE_USER_PW=demo
+# local db system user
+ORACLE_SYSTEM_ID=system
+ORACLE_SYSTEM_PW=abc123
+# database server location (likely localhost)
+ORACLE_HOSTNAME=localhost
+
+###############################################################################
+###[ END CUSTOMIZE ME ]#######################################################
+###############################################################################
+
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#!!!!  DO NOT EDIT BELOW THIS LINE  !!!!!
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+# convenience connect string for db app user
+ORACLE_USER_CONNECT=${ORACLE_USER_ID}/${ORACLE_USER_PW}@//${ORACLE_HOSTNAME}/${ORACLE_SID}
+# convenience connect string for db system user
+ORACLE_SYSTEM_CONNECT=${ORACLE_SYSTEM_ID}/${ORACLE_SYSTEM_PW}@//${ORACLE_HOSTNAME}/${ORACLE_SID}
+# location of oracle import/export dumpfiles (needs abs path)
+DUMPFILE_DIR=$(readlink -f $(dirname $0)/../oradump)
+
+# oracle is fussy
+export LD_LIBRARY=${ORACLE_HOME}/lib
+# include oracle tools in path
+export PATH=${PATH}:${ORACLE_HOME}/bin
+# oracle tools need access
+export ORACLE_HOME
+# needed by reset scripts to reference latest alm build
+export RALLY_HOME_LATEST
+

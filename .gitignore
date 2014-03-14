@@ -1,1 +1,6 @@
 .bundle
+oradump
+*.dmp
+tmp
+target
+

@@ -1,0 +1,6 @@
+ruby-1.8.7-p374 is not installed.
+To install do: 'rvm install ruby-1.8.7-p374'
+Fri Mar 14 11:18:27 -0600 2014-INFO: Loading node specific configuration from /home/appuser/etc/rally_node.cfg
+Fri Mar 14 11:18:27 -0600 2014-INFO: Loading node specific configuration from /home/appuser/etc/rally_node_overrides.cfg
+Fri Mar 14 11:18:27 -0600 2014-INFO: Rotating GC logs.
+Fri Mar 14 11:18:38 -0600 2014-INFO: Started!

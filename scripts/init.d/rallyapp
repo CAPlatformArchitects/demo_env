@@ -1,0 +1,66 @@
+#!/bin/bash
+#
+# rallyapp        Startup script for the Rally Services
+#
+# processname: java (2: alm & analytics)
+# home: /home/$USER/alm/*
+# home: /home/$USER/analytics/*
+#
+# Instructions: Copy to /etc/init.d
+
+# Path to the apachectl script, server binary, and short-form for messages.
+apachectl=/usr/sbin/apachectl
+httpd=${HTTPD-/usr/sbin/httpd}
+RETVAL=0
+
+start() {
+	cd /home/$USER/appserver-config-latest
+	echo -n "Starting Rally ALM..."
+	cfg_file="/home/$USER/appserver-config-latest/alm/etc/alm.cfg"
+	log_file="/home/$USER/domains/alm/logs/startup.log"
+	pid_file="/home/$USER/alm.pid"
+	./bin/ignitr start ${cfg_file} ${env_flag} -p -l ${log_file} --pid-file ${pid_file}
+	echo "Finished."
+	echo -n "Starting Rally Analytics..."
+	cfg_file="/home/$USER/appserver-config-latest/analytics/etc/analytics.cfg"
+        log_file="/home/$USER/domains/analytics/logs/startup.log"
+        pid_file="/home/$USER/analytics.pid"
+        ./bin/ignitr start ${cfg_file} ${env_flag} -p -l ${log_file} --pid-file ${pid_file}
+        echo "Finished."
+
+	RETVAL=$?
+	return $RETVAL
+}
+
+stop() {
+	echo -n "Stopping Rally: "
+	killall -9 java > /dev/null 2>&1
+	RETVAL=$?
+	if [ $RETVAL -eq 0 ]; then
+		sleep 5
+		echo "Finished."
+	else
+        	echo -n "Not running."
+	fi;
+	echo
+	return $RETVAL
+}
+
+# See how we were called.
+case "$1" in
+  start)
+	start
+	;;
+  stop)
+	stop
+	;;
+  restart)
+	stop
+	start
+	;;
+  *)
+	echo $"Usage: rallyapp {start|stop|restart}"
+	RETVAL=2
+esac
+
+exit $RETVAL
