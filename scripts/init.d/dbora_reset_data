@@ -22,7 +22,7 @@ status() {
 install() {
   self=`readlink -f $0`
   self_short=`basename ${self}`
-  ln -s ${self} /etc/init.d/${self_short}
+  ln -sf ${self} /etc/init.d/${self_short}
   chkconfig ${self_short} on
   RETVAL=$?
 }
